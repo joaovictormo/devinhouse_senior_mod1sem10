@@ -2,8 +2,8 @@ import java.sql.*;
 
 public class TestaConexao {
   public static void main(String[] args) {
-    // String url = "jdbc:postgresql://localhost:5432/magazine_senai";
-    String url = "jdbc:postgresql:magazine_senai";
+    String url = "jdbc:postgresql://localhost:5432/magazine_senai";
+    //String url = "jdbc:postgresql:magazine_senai";
     String user = "postgres";
     String password = "root";
 
