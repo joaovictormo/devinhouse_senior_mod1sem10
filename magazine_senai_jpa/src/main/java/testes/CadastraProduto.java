@@ -1,6 +1,7 @@
 package testes;
 
 import dao.ProdutoDAO;
+import models.Categoria;
 import models.Produto;
 import models.enums.StatusProduto;
 import utils.JPAUtil;
@@ -20,11 +21,15 @@ public class CadastraProduto {
     produto.setDataCadastro(LocalDate.now());
     produto.setStatus(StatusProduto.PRATELEIRA);
 
+    Categoria categoria = new Categoria("LIVRO");
+
     EntityManager em = JPAUtil.getEntityManager();
 
     ProdutoDAO dao = new ProdutoDAO(em);
 
     em.getTransaction().begin();
+
+    produto.setCategoria(categoria);
 
     dao.cadastrar(produto);
 

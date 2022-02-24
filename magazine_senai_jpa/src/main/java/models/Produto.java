@@ -9,6 +9,7 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import java.time.LocalDate;
 
@@ -27,6 +28,8 @@ public class Produto {
   private LocalDate dataCadastro = LocalDate.now();
   @Enumerated(EnumType.STRING)
   private StatusProduto status;
+  @ManyToOne
+  private Categoria categoria;
 
   public Long getId() {
     return id;
@@ -82,5 +85,13 @@ public class Produto {
 
   public void setStatus(StatusProduto status) {
     this.status = status;
+  }
+
+  public Categoria getCategoria() {
+    return categoria;
+  }
+
+  public void setCategoria(Categoria categoria) {
+    this.categoria = categoria;
   }
 }
