@@ -16,5 +16,19 @@ public class ProdutoDAO {
     this.em.persist(produto);
   }
 
+  public void atualizar(Produto produto) {
+    this.em.merge(produto);
+  }
+
+  public void excluir(Produto produto) {
+    produto = this.em.merge(produto);
+    this.em.remove(produto);
+  }
+
+  public void excluirPeloId(Long id) {
+    Produto produto = this.em.find(Produto.class, id);
+    this.em.remove(produto);
+  }
+
 
 }

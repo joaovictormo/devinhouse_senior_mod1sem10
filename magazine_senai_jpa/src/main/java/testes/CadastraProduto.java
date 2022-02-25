@@ -1,5 +1,6 @@
 package testes;
 
+import dao.CategoriaDAO;
 import dao.ProdutoDAO;
 import models.Categoria;
 import models.Produto;
@@ -14,8 +15,8 @@ import java.time.LocalDate;
 public class CadastraProduto {
   public static void main(String[] args) {
     Produto produto = new Produto();
-    produto.setNome("Livro Angular");
-    produto.setDescricao("Livro didático de Angular");
+    produto.setNome("Livro Angular2");
+    produto.setDescricao("Livro didático de Angular2");
     produto.setPreco(100.0);
     produto.setQtdEstoque(10);
     produto.setDataCadastro(LocalDate.now());
@@ -25,16 +26,36 @@ public class CadastraProduto {
 
     EntityManager em = JPAUtil.getEntityManager();
 
-    ProdutoDAO dao = new ProdutoDAO(em);
+    ProdutoDAO produtoDAO = new ProdutoDAO(em);
+    CategoriaDAO categoriaDAO = new CategoriaDAO(em);
 
     em.getTransaction().begin();
 
+    categoriaDAO.cadastrar(categoria);
+    categoria.setNome("APOSTILA");
+    em.flush();
+
     produto.setCategoria(categoria);
 
-    dao.cadastrar(produto);
+    produtoDAO.cadastrar(produto);
+
+    em.clear();
+
+    produto.setPreco(10);
+    em.flush();
+
+    produtoDAO.atualizar(produto);
+
+    Produto produtoEncontrado = em.find(Produto.class, 23L);
+    produtoEncontrado.setStatus(StatusProduto.FALTA);
+
+    Produto produtoParaExcluir = em.find(Produto.class, 41L);
+
+    Long id = 41L;
+    produtoDAO.excluirPeloId(id);
 
     em.getTransaction().commit();
-    em.close();
 
+    // System.out.println(produto.getPreco());
   }
 }
